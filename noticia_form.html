@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace="/fragments/head :: head" </head>
+    <body>
+
+        <div class="container">
+            <header th:replace ="/fragments/header :: header" </header>
+        </div>
+
+        <div class="container">
+            <h1>Cargar Nueva Noticia</h1>
+
+            <form th:action="@{/noticia/registro/__${session.usuariosession.id}__}" method="POST" enctype="multipart/form-data">
+
+                <input hidden th:value="${session.usuariosession.id}" name="id">
+
+                <div class="mb-3">
+                    <label for="noticia" class="form-label">Titulo</label>
+                    <input type="text" class="form-control" name="titulo" id="noticia" placeholder="Titulo de la Noticia">
+                </div>
+                <div class="mb-3">
+                    <label for="cuerpo" class="form-label">Cuerpo de noticia</label>
+                    <textarea class="form-control" name="cuerpo" id="cuerpo" rows="3" placeholder="Desarrollo de la noticia"></textarea>
+
+
+                </div>
+                <div class="form-check form-switch">
+                    <input name="alta"  class="form-check-input"  type="checkbox" role="switch" id="alta">
+                    <label class="form-check-label" for="alta">Alta</label>
+                </div>
+                <div class="form-check form-switch">
+                    <label for="imagen">Subir imagen:</label>
+                    <input type="file" id="imagen" name="archivo" class="form-control mt-3 mb-3" > <!-- accept="image/*"-->
+                </div>
+                <button type="submit" class="btn btn-primary">Cargar</button>
+            </form>
+
+            <!-- th:if --- condicional, si el error existe se muestra esta ventana -->
+            <div  th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
+                <div class="card-body">
+                    <h5 class="card-title">Error !!!</h5>
+                    <!-- th:text --- llama al mensaje en la key del model.put error en la etiqueta P -->
+                    <p class="card-text" th:text="${error}"></p>
+                </div>
+            </div>
+            <!-- aca si no existe el error... o sea, si "exito(del modelMap.put)" es diferente a null  -->
+            <div th:if="${exito != null}" class="card text-white bg-success mb-3 mensajeExito">
+                <div class="card-body">
+                    <h5 class="card-title">Exito !!!</h5>
+                    <!-- se carga en mensaje de th:text --- "exito" en la etiqueta P -->
+                    <p class="card-text" th:text="${exito}"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <footer th:replace="/fragments/footer :: footer" </footer>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+
+        <script>
+            tinymce.init({
+                selector: 'textarea', // Selecciona todos los textareas en la página
+                plugins: 'lists link image emoticons', // Plugins que deseas habilitar
+                toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist | link image emoticons', // Controles de formato
+                menubar: false // Deshabilita la barra de menú de TinyMCE
+            });
+        </script>
+
+
+
+    </body>
+</html>
