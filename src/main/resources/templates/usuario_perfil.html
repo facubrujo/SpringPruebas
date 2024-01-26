@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html  xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace="/fragments/head :: head" </head>
+    <body>
+
+        <div class="container">
+            <header th:replace="~{/fragments/header :: header}" </header>
+        </div>
+
+        <main class="container">
+            <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary inicio" >
+                <div class="col-lg-6 px-0 text-dark ">
+                    <h1 class="display-4 fst-italic fw-bold" >Perfil</h1>
+                    <h3 class="fw-semibold" th:if="${session.usuariosession != null}" th:text="'Hola de vuelta ' + ${session.usuariosession.nombre} " ></h3>
+                    <h1 class="fw-semibold" th:if="${session.usuariosession.rol == ADMIN }" th:text="'SEÑOR ' + ${session.usuariosession.rol}" ></h1>
+
+                    <div class="card mb-3 " style="max-width:600px;">
+                        <div class="card-header  d-flex justify-content-around bg-warning">
+                            <div class="col-auto d-flex align-items-center  ">
+                                <h4 class="fw-bold mb-1 ">
+                                    EggNew's
+                                </h4>
+                                <h3 class="mx-5">
+                                    Credencial
+                                </h3>
+                            </div>
+                            <div class="col-1 d-flex align-items-center fs-5">
+
+                              
+                                
+                                <a type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" class="btn icon-link icon-link-hover link-dark link-underline-dark link-underline-opacity-25 fs-2 icono-tarjeta"  ><i class="bi bi-gear-fill"></i></a>
+
+                                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                                    <div class="offcanvas-header">
+                                        <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body">
+                                        <form th:action="@{'/'+__${session.usuariosession.id}__}" method="POST" enctype="multipart/form-data" class="form-control d-grid">
+
+                                            <input hidden th:value="${id}" name="id">
+
+                                            <h2 class="text-center mt-3 mb-3">MODIFICAR USUARIO</h2>
+                                            <p th:text="${session.usuariosession.id}"></p>
+
+
+                                            <label for="nombre">Nombre:</label>
+                                            <input  type="text" id="nombre" name="nombre" placeholder="NOMBRE" th:value="${session.usuariosession.nombre}" class="form-control mt-3 mb-3" />
+
+                                            <label for="mail">Correo Electrónico:</label>
+                                            <input  type="text" id="mail" name="email" placeholder="EMAIL" th:value="${session.usuariosession.email}" class="form-control mt-3 mb-3" />
+
+
+                                            <label for="contraseña">Contraseña:</label>
+                                            <input type="password" id="contraseña" name="password" placeholder="PASSWORD"  class="form-control mt-3 mb-3" />
+
+                                            <label for="contraseña2">Contraseña:</label>
+                                            <input type="password" id="contraseña2" name="password2" placeholder="REPETIR CONTRASEÑA"  class="form-control mt-3 mb-3" />
+
+                                            <label for="imagen">Subir imagen:</label>
+                                            <input type="file" id="imagen" name="archivo" accept="image/*" class="form-control mt-3 mb-3" >
+
+                                            <button type="submit" class="btn btn-primary w-100 py-2 my-3">Modificar</button>
+
+                                        </form>
+
+                                    </div>
+                                </div>
+
+
+
+                               
+                            </div>
+                        </div>
+                        <div class="row g-0">
+                            <div class="col-md-4 d-flex">
+                                <div class="imagen-tarjeta-perfil d-flex">
+                                    <img  th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="Img logo">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+
+                                    <table class="table">
+                                        <tbody >
+                                            <tr class="border-top-0 border-end-0 border-start-0 border-3 border-warning">
+                                                <th scope="row">Nombre : </th>
+                                                <td th:text= "${session.usuariosession.nombre}"></td>
+                                            </tr>
+                                            <tr class="border-top-0 border-end-0 border-start-0 border-3 border-warning">
+                                                <th scope="row">Email : </th>
+                                                <td th:text= "${session.usuariosession.email}"></td>
+                                            </tr>
+                                            <tr class="border-top-0 border-end-0 border-start-0 border-3 border-warning">
+                                                <th scope="row">Username : </th>
+                                                <td th:text= "${session.usuariosession.nombreUsuario}"></td>
+                                            </tr>
+                                            <tr class="border-top-0 border-end-0 border-start-0 border-3 border-warning">
+                                                <th scope="row">Rol : </th>
+                                                <td th:text= "${session.usuariosession.rol}"></td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div  class="card-footer bg-warning ">
+                            <p class="fw-semibold " th:text= "'User Id : '+${session.usuariosession.id}" ></p>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    <div  th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
+                        <div class="card-body">
+                            <h5 class="card-title">Error !!!</h5>
+                            <p class="card-text" th:text="${error}"></p>
+                        </div>
+                    </div>
+
+                    <div th:if="${exito != null}" class="card text-white bg-success mb-3 mensajeExito">
+                        <div class="card-body">
+                            <h5 class="card-title">Exito !!!</h5>
+                            <p class="card-text" th:text="${exito}"></p>
+                        </div>
+                    </div>
+
+                    <a  class="dropdown-item"  th:href="@{/registrar-periodista/__${session.usuariosession.id}__}" >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-newspaper" viewBox="0 0 16 16">
+                        <path d="M0 2.5A1.5 1.5 0 0 1 1.5 1h11A1.5 1.5 0 0 1 14 2.5v10.528c0 .3-.05.654-.238.972h.738a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 1 1 0v9a1.5 1.5 0 0 1-1.5 1.5H1.497A1.497 1.497 0 0 1 0 13.5v-11zM12 14c.37 0 .654-.211.853-.441.092-.106.147-.279.147-.531V2.5a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0-.5.5v11c0 .278.223.5.497.5H12z"/>
+                        <path d="M2 3h10v2H2V3zm0 3h4v3H2V6zm0 4h4v1H2v-1zm0 2h4v1H2v-1zm5-6h2v1H7V6zm3 0h2v1h-2V6zM7 8h2v1H7V8zm3 0h2v1h-2V8zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1z"/>
+                        </svg>
+                        Crear periodista
+                    </a>
+
+                </div>
+            </div>
+
+
+
+        </main>
+
+        <div class="container">
+            <footer th:replace="/fragments/footer :: footer" </footer>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    </body>
+</html>

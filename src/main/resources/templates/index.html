@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html  xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace="/fragments/head :: head" </head>
+    <body>
+
+        <div class="container sticky-top">
+            <header th:replace="~{/fragments/header :: header}" </header>
+        </div>
+
+
+
+        <main class="container">
+            <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary inicio" >
+                <!-- ULTIMA NOTICIA PRIMICIA O ALGO ASI -->
+                <div class="col-lg-6 px-0 text-dark ">
+                    <h1 class="display-4 fst-italic">Bienvenido a EggNews!!</h1>
+                    <p class="lead my-3">Encontra aqui todas las noticias, mantente informado y actualizado a un click de distancia.</p>
+                    <p class="lead mb-0"><a th:href="@{/registrar-usuario}" class="text-body-emphasis fw-bold">Registrate aqui...</a></p>
+                </div>
+            </div>
+            <!-- CARTAS ULTIMAS NOTICIAS -->
+            <div class="row mb-2">
+                <div class="col-md-6 " th:each="noticia : ${noticiasFiltradas}" style="min-width: 300px; min-height: 150px;" >
+                    <div th:if="${noticia.alta != false}" class="tarjeta row fondo g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative"  >
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <strong class="d-inline-block mb-2 text-success-emphasis">Design</strong>
+                            <h3 th:utext="${noticia.titulo}" class="mb-0">Post title</h3>
+                            <div th:utext="${noticia.fecha}" class="mb-1 text-body-secondary">Nov 11</div>
+                            <p th:text="${noticia.cuerpo}" class="mb-auto truncar-texto">
+                                This is a wider card with supporting text below as a natural lead-in to additional content.
+                            </p>
+                            <a href="#" class="text-body-emphasis fw-bold">Ver mas...</a>
+
+                        </div>
+                        <div class="col-auto d-none d-lg-block imagen-recortada-index">
+                            <img th:if="${noticia.imagen != null}" class="img-thumbnail " th:src="@{/imagen/noticia/__${noticia.id}__}" alt="Img logo"  height="300" >
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                </div>
+            </div>
+            <!-- Lista de noticias -->
+            <div class="row g-5">
+                <div class="col-md-8">
+                    <h3 class="pb-4 mb-4 fst-italic border-bottom">
+                        Todas las Noticias
+                    </h3>
+
+                    <article  th:each="noticia : ${noticias}" class="blog-post border p-3 m-3 fondo ">
+
+                        <div th:if="${noticia.alta != false}" class="row ">
+                            <div class="row ">
+                                <div class="col-9 ">
+                                    <h2 th:utext="${noticia.titulo}" name="titulo" class="display-5 link-body-emphasis mb-1">Sample blog post</h2>
+                                </div>
+
+                                <div class="col-3 d-flex flex-column align-items-center align-self-center ">
+                                    <div class="col imagen-recortada bg-dark ">
+                                        <img th:src="@{/imagen/perfil/__${noticia.periodista.id}__}" class="rounded-end" alt="usuario-imagen"  > 
+                                    </div>
+                                    <div class="col ">
+                                        <p>
+                                            <small th:text=" 'Por : '+${noticia.periodista.nombre}" class="text-body-secondary"></small>
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row ">
+                                <img th:if="${noticia.imagen != null}" class="img-fluid " th:src="@{/imagen/noticia/__${noticia.id}__}" alt="Img logo">
+
+                                <div class="row d-flex justify-content-end ">
+                                    <div class="col-auto ">
+                                        <p  th:utext="'Autor: ' + ${noticia.periodista.nombre}">Dato de autor o algo asi</p>
+                                    </div>
+                                    <div class="col-auto ">
+                                        <p th:utext="'Fecha: '+ ${noticia.fecha}">Fecha de publicacion dd/mm/aaaa </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ">
+                                <p th:utext="${noticia.cuerpo}" name="cuerpo" >T.</p>
+                                <hr>
+                            </div>
+                            <!-- SECCION COMENTARIOS -->
+
+                            <div class="row ">
+                                <hr>
+                                <h5>COMENTARIOS</h5>
+                                <hr>
+                            </div>
+                            <!-- INGRESAR COMENTARIO -->
+                            <div class="row ">
+                                <div class=" mx-auto p-2 ">
+
+                                    <div class="card"  th:if="${session.usuariosession != null}" >
+
+                                        <form th:action="@{/}" method="POST" enctype="multipart/form-data" class="fondo">
+                                            <input hidden th:value="${session.usuariosession.id}" name="id">
+                                            <input hidden th:value="${noticia.id}" name="idNoticia">
+                                            <div >
+                                                <textarea class="form-control comentario" id="comentario" name="comentario" rows="3" th:placeholder="${session.usuariosession.nombre + ', deja aqui tu comentaio'}"></textarea>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary ">Submit</button>
+                                        </form>     
+                                    </div>
+                                    <div class="text-center  " th:if="${session.usuariosession == null}" >
+                                        <a th:href="@{/login}" type="button"  class="btn btn-outline-dark btn-warning me-2">Debe estar logueado para porder comentar</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- MOSTRAR COMENTARIOS-- iterar una lista de comentarios ordenados por fecha -->
+                            <div class="row ">
+                                <div class=" mx-auto p-2 comentarios-container ">
+
+                                    <div class="card m-3" th:each="comentario : ${noticia.comentarios}" >
+                                        <div class="row g-0 comentario ">
+                                            <div class="col-md-4 imagen-comentario ">
+                                                <img th:src="@{/imagen/perfil/__${comentario.usuario.id}__}" class="img-fluid rounded-start" alt="usuario-imagen"> 
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 th:utext="${comentario.usuario.nombre}"  class="card-title">Card title</h5>
+                                                    <p th:utext="${comentario.comentario}" class="card-text">Esto es una caja de comentarios... </p>
+                                                    <p   class="card-text"><small th:text="${comentario.fecha}" class="text-body-secondary">Comentado tal FECHA Last updated 3 mins ago</small></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </article>
+
+                    <nav class="blog-pagination" aria-label="Pagination">
+                        <a class="btn btn-outline-primary rounded-pill" href="#">Older</a>
+                        <a class="btn btn-outline-secondary rounded-pill disabled" aria-disabled="true">Newer</a>
+                    </nav>
+
+                </div>
+                <!-- COSA DEL COSTADO DERECHO -->
+                <div class="col-md-4">
+                    <div class="position-sticky" style="top: 2rem;">
+                        <div class="p-4 mb-3 fondo rounded">
+                            <h4 class="fst-italic">About</h4>
+                            <p class="mb-0">Noticias.</p>
+                        </div>
+
+                        <div>
+                            <h4 class="fst-italic">Post recientes</h4>
+                            <ul class="list-unstyled">
+                                <li  th:each="noticia : ${noticiasFiltradas}">
+                                    <a th:if="${noticia.alta != false}" class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
+
+                                        <img th:if="${noticia.imagen != null}" class="img-thumbnail rounded mx-auto d-block" th:src="@{/imagen/noticia/__${noticia.id}__}" alt="Img logo"  width="100" height="100">
+
+
+                                        <div class="col-lg-8">
+                                            <h6 th:utext="${noticia.titulo}" class="mb-0">Example blog post title</h6>
+                                            <small th:utext="${noticia.fecha}" class="text-body-secondary">January 15, 2023</small>
+                                        </div>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <div class="p-4">
+                            <h4 class="fst-italic">Archives</h4>
+                            <ol class="list-unstyled mb-0">
+                                <li><a href="#">March 2021</a></li>
+                                <li><a href="#">February 2021</a></li>
+                                <li><a href="#">January 2021</a></li>
+                                <li><a href="#">December 2020</a></li>
+                                <li><a href="#">November 2020</a></li>
+                                <li><a href="#">October 2020</a></li>
+                                <li><a href="#">September 2020</a></li>
+                                <li><a href="#">August 2020</a></li>
+                                <li><a href="#">July 2020</a></li>
+                                <li><a href="#">June 2020</a></li>
+                                <li><a href="#">May 2020</a></li>
+                                <li><a href="#">April 2020</a></li>
+                            </ol>
+                        </div>
+
+                        <div class="p-4">
+                            <h4 class="fst-italic">Elsewhere</h4>
+                            <ol class="list-unstyled">
+                                <li><a href="#">GitHub</a></li>
+                                <li><a href="#">Twitter</a></li>
+                                <li><a href="#">Facebook</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+
+
+
+        <div class="scroll-to-top sticky-bottom d-flex justify-content-end " >
+
+            <a href="#" id="scrollToTopButton" type="button" class="btn btn-outline-warning boton-subir" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+                </svg>
+            </a>
+
+        </div>
+
+
+        <div class="container">
+            <footer th:replace="/fragments/footer :: footer" </footer>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+        <script th:src="@{/js/script.js}" integrity="" crossorigin="anonymous"></script>
+
+
+    </body>
+</html>
