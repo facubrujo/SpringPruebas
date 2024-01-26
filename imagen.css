@@ -1,0 +1,86 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 13 oct. 2023, 23:16:54
+    Author     : facun
+*/
+
+/*CARD COMENTARIO*/
+
+.imagen-comentario {
+    width: 30%; /* Establece el ancho máximo del contenedor */
+    /*height: 100%; /* Establece la altura máxima del contenedor */
+    overflow: hidden; /* Recorta cualquier contenido que se desborde del contenedor */
+}
+.imagen-comentario img {
+    clip: rect(0, 100px, 100px, 0); /* Define el recorte en forma de rectángulo (arriba, derecha, abajo, izquierda) */
+    width: 80%; /* Escala la imagen al 100% del contenedor */
+    height: 100%; /* Escala la altura automáticamente */
+    margin-top: 0px;
+    margin-left: 5px;
+}
+
+/*CARD PERFIL*/
+
+.imagen-tarjeta-perfil {
+    width: 100%; /* Establece el ancho máximo del contenedor */
+    /*height: 100%; /* Establece la altura máxima del contenedor */
+    overflow: hidden; /* Recorta cualquier contenido que se desborde del contenedor */
+}
+.imagen-tarjeta-perfil img {
+    clip: rect(0, 100px, 100px, 0); /* Define el recorte en forma de rectángulo (arriba, derecha, abajo, izquierda) */
+    width: 100%; /* Escala la imagen al 100% del contenedor */
+    height: 100%; /* Escala la altura automáticamente */
+    margin-top: 0px;
+}
+
+/*IMAGEN HEADER */
+
+.imagen-header {
+    width: 50px; /* Establece el ancho máximo del contenedor */
+    height: 50px; /* Establece la altura máxima del contenedor */
+    overflow: hidden; /* Recorta cualquier contenido que se desborde del contenedor */
+}
+.imagen-header img {
+    clip: rect(0, 200px, 100px, 0); /* Define el recorte en forma de rectángulo (arriba, derecha, abajo, izquierda) */
+    width: 100%; /* Escala la imagen al 100% del contenedor */
+    height: 100%; /* Escala la altura automáticamente */
+    margin-top: 0px;
+    margin-left: 0px;
+}
+
+/*IMAGEN AUTOR TITULO NOTICIA*/
+
+.imagen-recortada {
+    width: 100px; /* Establece el ancho máximo del contenedor */
+    height: 60px; /* Establece la altura máxima del contenedor */
+    overflow: hidden; /* Recorta cualquier contenido que se desborde del contenedor */
+}
+
+.imagen-recortada img {
+    clip: rect(0, 100px, 100px, 0); /* Define el recorte en forma de rectángulo 
+                                    (arriba, derecha, abajo, izquierda) */
+    width: 100%; /* Escala la imagen al 100% del contenedor */
+    height: auto; /* Escala la altura automáticamente */
+    margin-top: 0px;
+    margin-left: 0px;
+}
+
+/*IMAGEN card superior pagina NOTICIA*/
+
+.imagen-recortada-index {
+    width: 36%; /* Establece el ancho máximo del contenedor */
+    height: 100%; /* Establece la altura máxima del contenedor */
+    overflow: hidden; /* Recorta cualquier contenido que se desborde del contenedor */
+}
+
+.imagen-recortada-index img {
+    clip: rect(0, 100px, 100px, 0); /* Define el recorte en forma de rectángulo 
+                                    (arriba, derecha, abajo, izquierda) */
+    width: 100%; /* Escala la imagen al 100% del contenedor */
+    height: 100%; /* Escala la altura automáticamente */
+    margin-top: 0px;
+    margin-left: 0px;
+}
