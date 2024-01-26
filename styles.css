@@ -1,0 +1,40 @@
+.header{
+    background-color: #e6f7fee5;
+}
+.inicio{
+    background-image: url('../images/FondoZoom.jpg');
+    background-size: cover;
+
+}
+
+.tarjeta{
+    height: 80%;
+    width: 100%;
+}
+.comentarios-container {
+    max-height: 300px; /* Ajusta el valor según tus necesidades */
+    overflow-y: auto; /* Agrega una barra de desplazamiento vertical cuando los comentarios desborden */
+}
+
+.truncar-texto {
+    max-width: 200px; /* Ajusta el ancho máximo para truncar el texto */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Muestra puntos suspensivos (...) si el texto está truncado */
+}
+.fondo{
+    background-color: #e6f7fe;
+}
+.comentario{
+    background-color: #dbebf2
+}
+.boton-subir{
+    border-radius: 50%;
+    padding: 1em;
+    margin-right: 3em;
+}
+
+.icono-tarjeta{
+    --bs-icon-link-transform: translate3d(0, -.500rem, 0);
+    margin-bottom: .7rem;
+}
